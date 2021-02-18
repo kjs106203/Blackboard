@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    url: jdbc:mariadb://localhost:3306/blackboard
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: root
+    password: 1234
+  mvc:
+    view:
+      prefix: /WEB-INF/jsp/
+      suffix: .jsp
