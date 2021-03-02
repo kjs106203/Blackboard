@@ -10,7 +10,7 @@
         <label>제목</label>
         <input type = "text" name = "title" />
         <label>내용</label>
-        <input type = "text" name = "content"/>
+        <textarea name = "content"></textarea>
         <input type = "hidden" name = "author" value = "<sec:authentication property = "principal.username"/>">
         <input type = "hidden" name = "password" value = "<sec:authentication property = "principal.password"/>">
         <input type = "submit" value = "작성" />

@@ -60,7 +60,6 @@ public class BlackboardController {
 
     @GetMapping("/write")
     public String write(Model model) {
-        model.addAttribute("article", new Article()); //웹서버에서 웹뷰로 데이터를 넘겨줄때 model 사용
         return "write";
     }
 
