@@ -15,8 +15,8 @@ import java.util.Optional;
 public class BlackboardController {
     private ArticleRepository articleRepository;
 
-    public BlackboardController(ArticleRepository articleRepository) {
-        this.articleRepository = articleRepository;
+    public BlackboardController(ArticleRepository m_articleRepository) {
+        this.articleRepository = m_articleRepository; //클래스다이어그램에 표시 어떻게?
     }
 
     @GetMapping("/")

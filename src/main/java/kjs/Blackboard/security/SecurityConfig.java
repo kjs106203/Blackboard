@@ -1,11 +1,14 @@
 package kjs.Blackboard.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.sql.DataSource;
 
@@ -34,9 +37,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     DataSource dataSource; //application.yml에 datasource가 하나가 있으므로 그 datasource를 의미
                            // datasource가 하나만 있어서 autowired 가 가능
 
+    @Autowired
+    private UserRepositoryService userRepositoryService;
+
+    @Bean
+    public PasswordEncoder encoder() {
+        return new BCryptPasswordEncoder();
+    }
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         //super.configure(auth); 부모꺼 안씀
-        auth.jdbcAuthentication().dataSource(dataSource).passwordEncoder(new NoEncodingPasswordEncoder());
+        auth.userDetailsService(userRepositoryService).passwordEncoder(encoder());
     }
 }

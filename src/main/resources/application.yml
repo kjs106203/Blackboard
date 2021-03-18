@@ -5,7 +5,15 @@ spring:
     username: root
     password: 1234
     initialization-mode: always
+  jpa:
+    hibernate:
+      use-new-id-generator-mappings: false
+    generate-ddl: false
   mvc:
     view:
       prefix: /WEB-INF/jsp/
       suffix: .jsp
+
+logging:
+  level:
+    org.springframework.security: DEBUG
