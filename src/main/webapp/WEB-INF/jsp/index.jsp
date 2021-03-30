@@ -27,8 +27,7 @@
 
 <sec:authorize access = "isAuthenticated()">
     <sec:authentication property="principal.username" /> 님 안녕하세요.
-    <button onclick="location.href = 'javascript:askLogout()'" id = "btn_logout">로그아웃</button>
-    <spring:form method = "POST" action = "/logout">
+    <spring:form method = "POST" action = "/logout" onsubmit="return confirm('로그아웃 하시겠습니까?')">
         <input type = "submit" value = "로그아웃"/>
     </spring:form>
 </sec:authorize>
@@ -61,10 +60,11 @@
     }
 
     <c:forEach var = "article" items ="${articles}">
-        $("#div_article${article.id}").on("click", function() {
-            loadContent(${article.id});
-        })
+    $("#div_article${article.id}").on("click", function() {
+        loadContent(${article.id});
+    })
     </c:forEach>
+
 
 </script>
 
