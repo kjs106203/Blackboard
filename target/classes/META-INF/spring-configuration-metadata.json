@@ -1,0 +1,11 @@
+{
+  "groups": [
+    {
+      "name": "custom.strings",
+      "type": "kjs.Blackboard.BlackboardController",
+      "sourceType": "kjs.Blackboard.BlackboardController"
+    }
+  ],
+  "properties": [],
+  "hints": []
+}

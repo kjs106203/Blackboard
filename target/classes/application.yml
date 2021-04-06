@@ -17,3 +17,9 @@ spring:
 logging:
   level:
     org.springframework.security: DEBUG
+custom:
+  strings:
+    welcome: Welcome to Blackboard, ${custom.strings.name}
+    name: Jiseong
+mybatis:
+  type-aliases-package: kjs.Blackboard
