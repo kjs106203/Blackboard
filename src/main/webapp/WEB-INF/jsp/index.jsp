@@ -68,6 +68,12 @@
 
 </script>
 
+<ul>
+    <c:forEach var="num" begin="1" end="${pages}">
+        <li><button onclick="changePage(${num - 1})">${num}</button></li>
+    </c:forEach>
+</ul>
+
 <div id="divSearchBottomFrame">
 <div id="divSearchBottom">
     <form method = "GET" action = "/">

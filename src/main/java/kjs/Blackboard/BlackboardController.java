@@ -16,12 +16,10 @@ import java.util.Optional;
 @Controller
 @ConfigurationProperties(prefix = "custom.strings")
 public class BlackboardController {
-    private ArticleRepository articleRepository;
     private String welcome;
 
-    public BlackboardController(ArticleRepository m_articleRepository) {
-        this.articleRepository = m_articleRepository;
-    }
+    @Autowired
+    ArticleRepository articleRepository;
 
     @Autowired
     ArticleService articleService;
@@ -31,8 +29,14 @@ public class BlackboardController {
     }
 
     @GetMapping("/")
-    public String index(@RequestParam(required = false) String type, @RequestParam(required = false) String keyword, Model model) {
+    public String index(@RequestParam(required = false) String type, @RequestParam(required = false) String keyword, @RequestParam(required = false) String page, Model model) {
         Iterable<Article> articles;
+
+        int pages = 1;
+        int p = 0;
+        if(page != null) {
+            p = Integer.parseInt(page);
+        }
 
         List<Article> res = articleService.selectStartWith("This");
         System.out.println(res);
@@ -40,23 +44,28 @@ public class BlackboardController {
         System.out.println(welcome);
 
         if (type == null) {
-            articles = articleRepository.findAll();
+            articles = articleService.findAll();
         } else {
             switch (type) {
+                /*case "title" :
+                    articles = articleService.searchTitle(keyword);
+                    break;*/
                 case "title" :
-                    articles = articleRepository.findByTitleContainingIgnoreCase(keyword);
+                    articles = articleService.searchTitle(keyword, p).getContent(); //getContent를 이용하여 List로 변환 웹에서는 Page대신 List를 인식하기 때문
+                    pages = articleService.searchTitle(keyword, p).getTotalPages(); //게시글에 따라 페이지 수가 달라지는데 페이지 수를 측정
                     break;
                 case "author" :
-                    articles = articleRepository.findByAuthorIgnoreCaseOrderByDateDesc(keyword);
+                    articles = articleService.selectAuthor(keyword);
                     break;
                 case "content" :
-                    articles = articleRepository.findByContentContainingIgnoreCaseOrderByDate(keyword);
+                    articles = articleService.searchContent(keyword);
                     break;
                 default:
                     articles = articleRepository.findAll();
             }
         }
         model.addAttribute("articles", articles);
+        model.addAttribute("pages", pages);
         return "index";
     }
 
@@ -83,7 +92,7 @@ public class BlackboardController {
     public String getArticle(@ModelAttribute("article") Article article) { //jsp에서 commandname을 "article"로 설정 article은 Article이라는 자료형으로 만든 변수고 웹브라우저에서 작성한 내용이 담기는 곳
         articleService.insertArticle(article);
 
-        List<Article> result = articleRepository.findByAuthorIgnoreCaseOrderByDateDesc(article.getAuthor()); //사용자의 가장 최신글을 찾아 사용자의 이름을 result에 저장
+        List<Article> result = articleService.selectAuthor(article.getAuthor()); //사용자의 가장 최신글을 찾아 사용자의 이름을 result에 저장
         int id = result.get(0).getId(); //사용자가 최근에 작성한 글의 id번호
 
         return "redirect:/view?id=" + String.valueOf(id);

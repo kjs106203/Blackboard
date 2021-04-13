@@ -8,4 +8,6 @@ import java.util.List;
 public interface ArticleMapper {
     List<Article> selectStartWith(String start);
     void insertArticle(Article article);
+    List<Article> selectAuthor(String name);
+    List<Article> selectContent(String content);
 }

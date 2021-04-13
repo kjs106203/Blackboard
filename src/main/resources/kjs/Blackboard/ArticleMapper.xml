@@ -7,8 +7,14 @@
     <select id = "selectStartWith" resultType="article">
         SELECT * FROM article WHERE article.title LIKE CONCAT(#{start},'%');
     </select>
+    <select id= "selectAuthor" resultType="article">
+        SELECT * FROM article WHERE article.author LIKE CONCAT(#{name}, '%');
+    </select>
+    <select id="selectContent" resultType="article">
+        SELECT * FROM article WHERE article.content LIKE CONCAT('%', #{content}, '%');
+    </select>
     <insert id="insertArticle">
-        INSERT into article (title, author, date, password, content)
-        values (#{title}, #{author}, #{date}, #{password}, #{content})
+        INSERT into article (title, author, date, password, content);
+        values (#{title}, #{author}, #{date}, #{password}, #{content});
     </insert>
 </mapper>
