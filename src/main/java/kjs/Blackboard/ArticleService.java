@@ -1,5 +1,7 @@
 package kjs.Blackboard;
 
+import com.github.pagehelper.PageHelper;
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,8 +23,8 @@ public class ArticleService {
         return articleMapper.selectContent(content);
     }
 
-    List<Article> selectStartWith(String start) {
-
+    com.github.pagehelper.Page<Article> selectStartWith(String start, int page ) { //page = 페이지 번호
+        PageHelper.startPage(page, 2);
         return articleMapper.selectStartWith(start);
     }
 
@@ -37,7 +39,8 @@ public class ArticleService {
     Page<Article> searchTitle(String title, int page) {
         return articleRepository.findByTitleContainingIgnoreCase(title, PageRequest.of(page, 2));
     }
-    Iterable<Article> findAll() {
-        return articleRepository.findAll();
+    com.github.pagehelper.Page<Article> findAll(int page) {
+        PageHelper.startPage(page,2);
+        return articleMapper.findAll();
     }
 }

@@ -19,14 +19,17 @@ $(window).on("resize", function() {
 
 function changePage(page) {
     var addr = window.location.href.split("?")[1];
-    var params = addr.split("&");
     var uri = "";
-    params.forEach(function (param) {
-        if (!param.includes("page")) {
-            uri += (param + "&");
-        }
-    })
+    if (addr != null) {
+        var params = addr.split("&");
+        params.forEach(function (param) {
+            if (!param.includes("page")) {
+                uri += (param + "&");
+            }
+        })
+    }
 
     uri = "/?" + uri + "page=" + page;
+    console.log(uri);
     window.location.href = uri;
 }

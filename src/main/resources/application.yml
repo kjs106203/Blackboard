@@ -23,3 +23,6 @@ custom:
     name: Jiseong
 mybatis:
   type-aliases-package: kjs.Blackboard
+pagehelper:
+  helper-dialect: mariadb
+  reasonable : true

@@ -38,13 +38,15 @@ public class BlackboardController {
             p = Integer.parseInt(page);
         }
 
-        List<Article> res = articleService.selectStartWith("This");
+        List<Article> res = articleService.selectStartWith("", p).getResult();
+        articleService.selectStartWith("", 1).getPageSize();
         System.out.println(res);
 
         System.out.println(welcome);
 
         if (type == null) {
-            articles = articleService.findAll();
+            articles = articleService.findAll(p + 1).getResult(); //Page를 List로 변환
+            pages = articleService.findAll(p + 1).getPages();
         } else {
             switch (type) {
                 /*case "title" :
